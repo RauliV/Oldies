@@ -1,0 +1,609 @@
+program DATATAHTI94;
+  uses dos,crt,graph;
+
+  var TIEDMUUT : text;
+      RIVIT : array[0..20] of string;
+      RIVI,LUKU,NIMI : string;
+      TURHA : searchrec;
+      KARTTATYYPPI,KIRJAIN : char;
+      MERKKI,TYYPPI,TYYPPI2 : array [0..50,0..50] of word;
+      A,B,C,X,Y : integer;
+      TOTUUS,MUUTOS : boolean;
+
+
+  procedure KUVANHAKU;
+  begin
+    Assign (TIEDMUUT,TURHA.name);
+    reset(TIEDMUUT);
+    A := 1;
+    while not eof(TIEDMUUT) do begin
+      readln(TIEDMUUT,RIVIT[A]);
+      inc(A);
+    end;
+    close(TIEDMUUT);
+    X := 1;
+    Y := 1;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if RIVIT[Y][X] = 'M' then MERKKI[X,Y] := 1 else MERKKI[X,Y] := 0;
+      end;
+    end;
+    KARTTATYYPPI := RIVIT[1][1];
+    for Y := 0 to 17 do begin
+      TYYPPI[0,Y] := 100;
+      TYYPPI[49,Y] := 100;
+      TYYPPI2[0,Y] := 100;
+      TYYPPI2[49,Y] := 100;
+      MERKKI[0,Y] := 100;
+      MERKKI[49,Y] := 100;
+    end;
+    for X := 0 to 49 do begin
+      MERKKI[Y,0] := 100;
+      MERKKI[Y,17] := 100;
+      TYYPPI[X,0] := 100;
+      TYYPPI[X,17] := 100;
+      TYYPPI2[X,0] := 100;
+      TYYPPI2[X,17] := 100;
+    end;
+    for X := 1 to 48 do begin
+      for Y := 1 to 16 do begin;
+        TYYPPI[X,Y] := 0;
+        TYYPPI2[X,Y] := 0;
+      end;
+    end;
+  end;
+
+
+
+  procedure ETSIKUKKULA;
+  begin
+    MUUTOS := false;
+    for Y := 2 to 15 do begin
+      for X := 2 to 47 do begin
+        if (MERKKI [X,Y-1] = 1) and (MERKKI [X,Y+1] = 1)
+        and (MERKKI [X-1,Y] = 1) and (MERKKI [X+1,Y] = 1)
+        and (MERKKI [X,Y] = 1) then begin
+          if TYYPPI[X,Y] <> 1 then MUUTOS := true;
+          TYYPPI[X,Y] := 1;
+        end;
+      end;
+    end;
+  end;
+
+  procedure ETSINIEMI;
+  begin
+    MUUTOS := false;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (MERKKI[X,Y] = 1) and (MERKKI[X-1,Y]+MERKKI[X+1,Y]+MERKKI[X,Y+1]
+        +MERKKI[X,Y-1] = 1) then begin
+          if TYYPPI[X,Y] <> 5 then MUUTOS := true;
+          TYYPPI[X,Y] := 5;
+        end;
+      end;
+    end;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (MERKKI[X,Y] = 1) and (MERKKI[X-1,Y]+MERKKI[X+1,Y]+MERKKI[X,Y+1]
+        +MERKKI[X,Y-1] = 2) and ((TYYPPI[X-1,Y]+TYYPPI[X+1,Y]+TYYPPI[X,Y+1]
+        +TYYPPI[X,Y-1]) > 4 ) and ((TYYPPI[X-1,Y]+TYYPPI[X+1,Y]+TYYPPI[X,Y+1]
+        +TYYPPI[X,Y-1]) < 27 ) then begin
+          if TYYPPI[X,Y] <> 5 then MUUTOS := true;
+          TYYPPI[X,Y] := 5;
+        end;
+      end;
+    end;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (MERKKI[X,Y] = 1) and (MERKKI[X-1,Y]+MERKKI[X+1,Y]+MERKKI[X,Y+1]
+        +MERKKI[X,Y-1] = 3) and ((TYYPPI[X-1,Y]+TYYPPI[X+1,Y]+TYYPPI[X,Y+1]
+        +TYYPPI[X,Y-1]) > 9 ) and ((TYYPPI[X-1,Y]+TYYPPI[X+1,Y]+TYYPPI[X,Y+1]
+        +TYYPPI[X,Y-1]) < 32 ) then begin
+          if TYYPPI[X,Y] <> 5 then MUUTOS := true;
+          TYYPPI[X,Y] := 5;
+        end;
+      end;
+    end;
+  end;
+
+
+
+  procedure ETSIRANTAVIIVA;
+  begin
+    MUUTOS := false;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (MERKKI[X,Y] = 1) and (TYYPPI[X,Y] <> 5) and (TYYPPI[X,Y] <> 1)
+        then begin
+          if TYYPPI[X,Y] <> 21 then MUUTOS := true;
+          TYYPPI[X,Y] := 21;
+        end;
+      end;
+    end;
+  end;
+
+
+
+  procedure ETSIULAPPA;
+  begin
+    MUUTOS := false;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (MERKKI[X,Y] = 0) and ((MERKKI[X,Y-1] = 100) or (MERKKI[X,Y+1] =
+        100) or (MERKKI[X-1,Y] = 100) or (MERKKI[X+1,Y] = 100 )) then begin
+          if TYYPPI2[X,Y] <> 1 then MUUTOS := true;
+          TYYPPI2[X,Y] := 1;
+        end;
+      end;
+    end;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (MERKKI[X,Y] = 0) and ((TYYPPI2[X-1,Y] = 1) or (TYYPPI2[X+1,Y] = 1)
+        or (TYYPPI2[X,Y+1] = 1)or (TYYPPI2[X,Y-1] = 1)) then begin
+          if TYYPPI2[X,Y] <> 1 then MUUTOS := true;
+          TYYPPI2 [X,Y] := 1;
+        end;
+      end;
+    end;
+  end;
+
+
+
+  procedure ETSILAHTI;
+  begin
+    MUUTOS := false;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (TYYPPI2[X,Y] = 1) and (MERKKI[X-1,Y]+MERKKI[X+1,Y]+MERKKI[X,Y+1]
+        +MERKKI[X,Y-1] > 1) and (MERKKI[X-1,Y]+MERKKI[X+1,Y]+MERKKI[X,Y+1]
+        +MERKKI[X,Y-1] < 4) and (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] > 0) and (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] < 3) then begin
+          TYYPPI2[X,Y] := 5;
+          MUUTOS := true;
+        end;
+      end;
+    end;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (TYYPPI2[X,Y] = 1) and (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] > 4) and (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] < 7) and (MERKKI[X-1,Y]+MERKKI[X+1,Y]+MERKKI[X,Y+1]
+        +MERKKI[X,Y-1] > 1) then begin
+          TYYPPI2[X,Y] := 5;
+          MUUTOS := true;
+        end;
+      end;
+    end;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (TYYPPI2[X,Y] = 1) and ((TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] = 10) or (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] = 11) or (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] = 15) or (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] = 16) or (TYYPPI2[X,Y+1]+TYYPPI2[X,Y-1]+TYYPPI2[X+1,Y]+
+        TYYPPI2[X-1,Y] = 20)) then begin
+          TYYPPI2[X,Y] := 5;
+          MUUTOS := true;
+        end;
+      end;
+    end;
+  end;
+
+
+
+
+  procedure ETSIJARVI;
+  begin
+    MUUTOS := false;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if (TYYPPI2[X,Y] = 0) and (MERKKI[X,Y] = 0) then begin
+          TYYPPI2[X,Y] := 21;
+          MUUTOS := true;
+        end;
+      end;
+    end;
+  end;
+
+
+
+  procedure MUUTTO;
+  begin
+    repeat
+      ETSIKUKKULA;
+     until MUUTOS = false;
+     repeat
+       ETSINIEMI;
+     until MUUTOS = false;
+     repeat
+       ETSIRANTAVIIVA;
+     until MUUTOS = false;
+     repeat
+       ETSIULAPPA;
+     until MUUTOS = false;
+     repeat
+       ETSILAHTI;
+     until MUUTOS = false;
+     repeat
+       ETSIJARVI;
+     until MUUTOS = false;
+   end;
+
+
+
+
+  procedure TULOSTUS;
+  begin
+    clrscr;
+    writeln;writeln('       ALKUPERŽINEN, TUTKIMATON, KARTTA :');
+    writeln;
+    for A := 1 to 16 do begin
+      writeln(RIVIT[A]);
+    end;
+    gotoxy(60,10);
+    write('  M = Maa');
+    gotoxy(60,12);
+    write('  V = Vesi');
+    gotoxy(0,0);
+    write('');
+    repeat
+    until keypressed;
+    KIRJAIN := readkey;
+    clrscr;
+    writeln;writeln('          UUSI, TUTKITTU, KARTTA :');
+    writeln;
+    for Y := 1 to 16 do begin
+      for X := 1 to 48 do begin
+        if TYYPPI2[X,Y] = 21 then write('J');
+        if TYYPPI2[X,Y] = 5 then write('L');
+        if TYYPPI2[X,Y] = 1 then write('U');
+        if TYYPPI[X,Y] = 1 then write('K');
+        if TYYPPI[X,Y] = 5 then write('N');
+        if TYYPPI[X,Y] = 21 then write('R');
+      end;
+      writeln;
+    end;
+    gotoxy(50,6);
+    write('  U = Ulappa');
+    gotoxy(50,8);
+    write('  L = Lahti');
+    gotoxy(50,10);
+    write('  J = J„rvi');
+    gotoxy(50,12);
+    write('  K = Kukkula');
+    gotoxy(50,14);
+    write('  N = Niemi');
+    gotoxy(50,16);
+    write('  R = Rantaviivaa');
+    gotoxy(10,22);
+    write('  Ruudukon ulkopuolinen alue on ulappaa !!');
+    gotoxy(0,0);
+    write('');
+    repeat
+    until keypressed;
+    KIRJAIN := readkey
+  end;
+
+
+
+  procedure TAYDENNYS;
+  begin
+    if length(RIVI) <> 48 then begin
+      if KARTTATYYPPI = 'M' then begin
+        insert('MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',RIVI,length(RIVI)+1);
+      end else insert('VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV',RIVI,length(RIVI)+1);
+      delete(RIVI,49,length(RIVI)-48);
+    end;
+    RIVIT[A] := RIVI;
+  end;
+
+
+
+  procedure TUTKIKARTTA;
+  begin
+    repeat
+      TOTUUS := true;
+      clrscr;
+      writeln;writeln;
+      write('   Anna karttasi numero: ');
+      readln(A);
+      str(A,LUKU);
+      NIMI := 'testi.asc';
+      insert(LUKU,NIMI,6);
+      doserror := 0;
+      findfirst(NIMI,archive,TURHA);
+      if doserror <> 0 then TOTUUS := false;
+      if not TOTUUS then begin
+        writeln;writeln;writeln(' Ei l”ydy karttaa !!!');
+        sound(250);
+        delay(400);
+        nosound;
+        delay(600);
+      end;
+    until TOTUUS;
+    clrscr;
+  end;
+
+
+
+
+  procedure MUOKKAUS;
+  begin
+    TUTKIKARTTA;
+    KUVANHAKU;
+    repeat
+      clrscr;
+      writeln;writeln('   VANHAN KARTAN MUOKKAUS :');
+      writeln;
+      for A := 1 to 16 do begin
+        if A < 10 then writeln(' ',A,'.  ',RIVIT[A])
+        else writeln(' ',A,'. ',RIVIT[A]);
+      end;
+      gotoxy(5,22);
+      writeln(' Mit„ rivi„ muutat ? ');
+      writeln('   ( 99 = Lopetus ) ');
+      readln(A);
+      if (A <> 99) and (A > 0) and (A < 17) then begin
+        gotoxy(6,3+A);
+        clreol;
+        readln(RIVI);
+        TOTUUS := true;
+        for Y := 1 to length(RIVI) do begin
+          if  (RIVI[Y] = 'm') or (RIVI[Y] = 'M') or (RIVI[Y] = 'v')
+          or (RIVI[Y] = 'V') then RIVI[Y] := upcase(RIVI[Y]) else
+          TOTUUS := false;
+        end;
+        if TOTUUS = true then TAYDENNYS;
+      end;
+    until A = 99;
+    clrscr;
+    repeat
+      gotoxy(5,22);
+      writeln(' Haluatko korvata vanhan version (K/E) ? ');
+      repeat
+      until keypressed;
+      KIRJAIN := readkey;
+    until (KIRJAIN = 'k') or (KIRJAIN = 'K') or (KIRJAIN = 'e')
+    or (KIRJAIN = 'E');
+    if (KIRJAIN = 'k') or (KIRJAIN = 'K') then begin
+      assign(TIEDMUUT,TURHA.name);
+      rewrite(TIEDMUUT);
+      for Y := 1 to 48 do begin
+        writeln(TIEDMUUT,RIVIT[Y]);
+      end;
+      close(TIEDMUUT);
+    end;
+  end;
+
+
+
+  procedure UUSI;
+  begin
+    clrscr;
+    doserror := 0;
+    findfirst('testi20.asc',archive,TURHA);
+    if doserror = 0 then begin
+      writeln(' Karttoja ei voi muodostaa enemp„„');
+      delay(600);
+    end else begin
+      doserror := 0;
+      repeat
+        clrscr;
+        writeln;writeln('             UUDEN KARTAN VALMISTUS :');
+        writeln;
+        writeln('    Piirr„tk” kartan Maalle vai Veteen (M/V) ?');
+        repeat
+        until keypressed;
+        KIRJAIN := readkey;
+      until (KIRJAIN = 'm') or (KIRJAIN = 'M') or (KIRJAIN = 'v')
+      or (KIRJAIN = 'V');
+      if (KIRJAIN = 'v') or (KIRJAIN = 'V') then begin
+        KARTTATYYPPI := 'V';
+        RIVI := 'VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
+      end;
+      if (KIRJAIN = 'm') or (KIRJAIN = 'M') then begin
+        RIVI := 'MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM';
+        KARTTATYYPPI := 'M';
+      end;
+      for Y := 1 to 16 do begin
+        RIVIT[Y] := RIVI;
+      end;
+      repeat
+        clrscr;
+        writeln;writeln('   UUDEN KARTAN MUOKKAUS :');
+        writeln;
+        for A := 1 to 16 do begin
+          if A < 10 then writeln(' ',A,'.  ',RIVIT[A])
+          else writeln(' ',A,'. ',RIVIT[A]);
+        end;
+        gotoxy(5,22);
+        writeln(' Mit„ rivi„ muutat ? ');
+        writeln('   ( 99 = Lopetus ) ');
+        readln(A);
+        if (A <> 99) and (A > 0) and (A < 17) then begin
+          gotoxy(6,3+A);
+          clreol;
+          readln(RIVI);
+          TOTUUS := true;
+          for Y := 1 to length(RIVI) do begin
+            if  (RIVI[Y] = 'm') or (RIVI[Y] = 'M') or (RIVI[Y] = 'v')
+            or (RIVI[Y] = 'V') then RIVI[Y] := upcase(RIVI[Y]) else
+            TOTUUS := false;
+          end;
+          if TOTUUS = true then TAYDENNYS;
+        end;
+      until A = 99;
+      clrscr;
+      repeat
+        gotoxy(5,22);
+        writeln(' Tallennatko uuden kartan (K/E) ? ');
+        repeat
+        until keypressed;
+        KIRJAIN := readkey;
+      until (KIRJAIN = 'k') or (KIRJAIN = 'K') or (KIRJAIN = 'e')
+      or (KIRJAIN = 'E');
+      if (KIRJAIN = 'k') or (KIRJAIN = 'K') then begin
+        doserror := 0;
+        A := 0;
+        C := 0;
+        findfirst('*.asc',archive,TURHA);
+        while doserror = 0 do begin
+          NIMI := TURHA.name;
+          LUKU := copy(NIMI,6,length(NIMI)-9);
+          val(LUKU,A,B);
+          if A > C then C := A;
+          findnext(TURHA);
+        end;
+        if C = 0 then NIMI :='testi0.asc';
+        inc(C);
+        str(C,LUKU);
+        delete(NIMI,6,length(NIMI)-9);
+        insert(LUKU,NIMI,6);
+        assign(TIEDMUUT,NIMI);
+        rewrite(TIEDMUUT);
+        for Y := 1 to 48 do begin
+          writeln(TIEDMUUT,RIVIT[Y]);
+        end;
+        close(TIEDMUUT);
+        writeln(' Kartta nro: ',C,' tallennettu');
+        delay(1000);
+      end;
+    end;
+  end;
+
+
+
+
+  procedure UUSIKARTTA;
+  begin
+    writeln;writeln;
+    writeln('   1. Muokkaatko vanhaa');
+    writeln('          vai');
+    writeln('   2. Valmistatko kokonaan uuden');
+    TOTUUS := false;
+    repeat
+      if keypressed then begin
+        KIRJAIN := readkey;
+        if (KIRJAIN  = '1') or (KIRJAIN = '2') then begin
+          TOTUUS := true;
+        end;
+      end;
+    until  TOTUUS;
+    if KIRJAIN = '1' then MUOKKAUS;
+    if KIRJAIN = '2' then UUSI;
+  end;
+
+
+
+
+  procedure SAANNOT;
+  begin
+    clrscr;
+    writeln;writeln;
+    writeln;writeln('         SŽŽNN™T :');
+    writeln;
+    writeln(' Maastoa on nelj„„ Tyyppi„ :      Maa');
+    writeln('                                  Kallio');
+    writeln('                                  Niemi');
+    writeln('                                  Rantaviiva');
+    writeln;
+    writeln(' Vesist”j„ on nelj„„ Tyyppi„ :    Vesi');
+    writeln('                                  Ulappa');
+    writeln('                                  Lahti');
+    writeln('                                  J„rvi');
+    writeln;
+    writeln(' Ruudut (48*16) ovat yhteydess„ yl„- ja alapuoliseen');
+    writeln(' sek„ kahteen viereiseen ruutuun.');
+    writeln(' Aluksi kukin ruutu on joko maata tai vett„. ');
+    writeln(' Ruudukon ulkopuolinen alue on ulappaa');
+    repeat
+    until keypressed;
+    KIRJAIN := readkey;
+    clrscr;
+    writeln;writeln;
+    writeln('  Seuraavat s„„nn”t ohjaavat ruutujen kuulumista eri tyyppeihin');
+    writeln;writeln;
+    writeln(' Kukkula, jos maasto on yhteydess„ nelj„„n muuhun maastoon');
+    writeln(' Niemi, jos maasto on yhteydess„ kolmeen vesist””n');
+    writeln('  tai maasto on yhteydess„ kahteen vesist””n ja ainakin yhteen niemeen');
+    writeln('  tai maasto on yhteydess„ yhteen vesist””n ja v„hint„„n kahteen niemeen');
+    writeln(' Rantaviiva, jos maasto ei ole kukkula eik„ niemi');
+    writeln(' Ulappa, jos vesisto on kytketty ainakin yhteen ulappaan');
+    writeln(' Lahti, jos ulappa on kytketty v„hint„„n kahteen lahteen');
+    writeln('        ja enint„„n yhteen ulappaan');
+    writeln('  tai yhteen lahteen ja v„hint„„n kahteen maastoon');
+    writeln('  tai v„hint„„n kahteen maastoon ja v„hint„„n yhteen ulappaan');
+    writeln(' J„rvi, jos vesi pysyy muuttumattomana kunnes muuta muutosta');
+    writeln('        ei en„„ voida tehd„');
+    repeat
+    until keypressed;
+    KIRJAIN := readkey;
+  end;
+
+
+
+
+
+  procedure PAAMENU;
+  begin
+    A := detect;
+    initgraph(A,B,'');
+    settextstyle(gothicfont,horizdir,6);
+    outtextxy ( 40,20,'Datat„hti teht„v„ v. -94');
+    settextstyle(triplexfont,horizdir,4);
+    outtextxy(100,170,'1. Tutkitko vanhoja karttoja');
+    outtextxy(170,220,'2. S„„nn”t n„kyviin');
+    outtextxy(180,270,'3. Luotko uuden');
+    outtextxy(240,320,'4. Poistu');
+    TOTUUS := false;
+    repeat
+      if keypressed then begin
+        KIRJAIN := readkey;
+        if (KIRJAIN  = '1') or (KIRJAIN = '2') or (KIRJAIN = '3')
+        or (KIRJAIN = '4') then begin
+          TOTUUS := true;
+        end;
+      end;
+    until  TOTUUS;
+    closegraph;
+    if KIRJAIN = '1'then begin
+      TUTKIKARTTA;
+      KUVANHAKU;
+      MUUTTO;
+      TULOSTUS;
+    end;
+    if KIRJAIN = '3' then UUSIKARTTA;
+    if KIRJAIN = '4' then begin
+      A := detect;
+      initgraph(A,B,'');
+      settextstyle(triplexfont,horizdir,5);
+      A := 0;
+      X:=600;Y:=-100;
+      repeat
+        setcolor(A);
+        outtextxy(X,Y,'Rauli kiitt„„ k„yt”st„');
+        inc(A);
+        if A > 9 then begin
+          setcolor(0);
+          outtextxy(X+30,Y-20,'Rauli kiitt„„ k„yt”st„');
+        end;
+        inc(Y,4);
+        dec(X,6);
+      until X < 95;
+      delay(5000);
+      closegraph;
+      halt(1);
+    end;
+    if KIRJAIN = '2' then saannot;
+  end;
+
+
+
+begin
+  repeat
+    PAAMENU;
+  until 1 = 2;
+end.
+
+
