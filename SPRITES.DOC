@@ -1,0 +1,160 @@
+*********************** Dokumentasjon for SPRITES.PAS *************************
+                            Av Karl H. Torvmark
+
+
+Dette er en unit for † lage sprites(grafikk elementer som flyttes over sjermen
+i grafikk modus) i Turbo Pascal 5.5. Den bruker TP 5.5s OOP (Objekt Orientert
+Programmering).
+Bruk den ved † tilf›ye USES Graph,Sprites; forrest i programmet ditt.
+Deretter deklaerer du en variablel av typen SPRITE til hver av spritene.
+Du bruker funksjonene ved † putte navnet p† sprite variablelen din foran og
+et punktum i mellom f.eks. MinSprite.Show.
+
+Deklarasjonen for Sprite typen er :
+
+
+
+
+Sprite = OBJECT
+           Sprite : Pointer;
+           X,Y    : Integer;
+           Size   : Word;
+
+
+           FUNCTION GetX:Integer;
+           FUNCTION GetY:Integer;
+           PROCEDURE Capture(x1,y1,x2,y2: Integer);
+           PROCEDURE Show;
+           PROCEDURE SetX(I : Integer);
+           PROCEDURE SetY(I : Integer);
+           PROCEDURE Move(ToX,ToY : Integer);
+           PROCEDURE SaveSprite(Filename : String12);
+           PROCEDURE LoadSprite(Filename : String12);
+
+          END;
+
+FUNCTION GetX:Integer;
+
+Denne funksjonen returnerer hva spritens X variabel er.
+Bruk denne funksjonen i stedet for † bruke X direkte.
+
+Eksempel :
+
+ HvorX:=MinSprite.GetX;
+
+Returnerer MinSprites X-verdi i HvorX.
+
+
+
+FUNCTION GetY:Integer;
+
+Denne funksjonen gj›r det samme som GetX ovenfor med spritens Y-verdi.
+
+Eksempel :
+ 
+ HvorY:=MinSprite.GetY;
+
+Returnerer MinSprites Y-verdi i HvorY.
+
+
+PROCEDURE Capture(X1,Y1,X2,Y2 : Integer);
+
+Denne prosedyren overf›rer det som er i omr†det p† skjermen definert av
+X1,Y1,X2 og Y2, og lagrer det i spriten.
+
+Eksempel :
+
+ MinSprite.Capture(10,10,20,20);
+
+Skjerm omr†det mellom 10,10 og 20,20 blir lagret i MinSprite.
+
+
+PROCEDURE Show;
+
+Denne prosedyren viser det som er lagret i spriten p† x,y.
+Husk † bruke Capture eller LoadSprite og SetX ogSetY f›rst.
+
+Eksempel :
+ 
+ MinSprite.Show;
+
+Viser MinSprite p† X,Y.
+
+
+
+
+PROCEDURE SetX(I : Integer);
+
+Setter Spritens X verdi til I.
+
+Eksempel :
+
+ MinSprite.SetX(10);
+
+Setter MinSprites X til 10.
+
+
+PROCEDURE SetY(I : Integer);
+
+Setter Spritens Y verdi til I.
+
+Eksempel :
+
+ MinSprite.SetX(10);
+
+Setter MinSprites Y til 10.
+
+
+PROCEDURE Move(ToX,ToY : Integer);
+
+Flytter Spriten fra n†v‘rende posisjon til ToX,ToY.
+Pass p† at spriten er synlig f›rst.
+
+Eksempel :
+
+ MinSprite.Move(20,20);
+
+Flytter MinSprite fra dens n†v‘rende posisjon til 20,20.
+
+
+PROCEDURE SaveSprite(FileName : String12);
+
+Lagrer spriten i en fil med navnet FileName.
+
+Eksempel :
+
+ MinSprite.SaveSprite('SPRITE.SPT');
+
+Lagrer MinSprite i SPRITE.SPT.
+
+
+
+PROCEDURE LoadSprite(FileName : Strin12);
+
+Henter en sprite som er blitt lagret p† disk med SaveSprite.
+
+Eksempel :
+ 
+ MinSprite.LoadSprite('SPRITE.SPT');
+
+Henter spriten som er lagret i SPRITE.SPT, og legger den i MinSprite.
+
+
+
+VIKTIG : Husk at du ikke kan lagre spriter st›rre enn 64K.
+
+
+Se TESTSPRT.PAS for et eksempel.
+
+Hvis du har noen sp›rsm†l, eller hvis du finner noen lus, kan du enten skrive
+til meg 
+          Karl H. Torvmark
+             Senstad
+        2074 Eidsvoll Verk
+
+eller du kan legge en beskjed igjen til Halvor Torvmark p† Dysan,
+eller til Hato p† DIX.
+
+
+
+Lykke til!

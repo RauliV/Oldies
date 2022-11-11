@@ -2,32 +2,32 @@ uses printer,dos,crt,esit,ar;
 
 procedure varasto;
 begin
-  totuus := false;
-  window(17,5,25,12);
-  repeat
-   textbackground(0);
-   textcolor(15);
-   clrscr;
-   writeln(' Lis„ys');
-   writeln(' Poisto');
-   writeln(' Tilanne');
-   writeln;
-   writeln(' Anna');
-   writeln(' kirjain ');
-   nappain := readkey;
-   if (nappain = 'u') or (nappain = 'U') then begin
-     nappain := 'z';
-     totuus := false;
-     exit;
-    end;
-    if (nappain = 'l') or (nappain = 'L') then begin
-      vlisays;
-      totuus := true;
-    end;
-    if (nappain = 'p') or (nappain = 'P') then begin
-      vpoisto;
-      totuus := true;
-    end;
+totuus := false;
+window(17,5,25,12);
+repeat
+textbackground(0);
+textcolor(15);
+clrscr;
+writeln(' Lis„ys');
+writeln(' Poisto');
+writeln(' Tilanne');
+writeln;
+writeln(' Anna');
+writeln(' kirjain ');
+nappain := readkey;
+if (nappain = 'u') or (nappain = 'U') then begin
+nappain := 'z';
+totuus := false;
+exit;
+end;
+if (nappain = 'l') or (nappain = 'L') then begin
+vlisays;
+totuus := true;
+end;
+if (nappain = 'p') or (nappain = 'P') then begin
+vpoisto;
+totuus := true;
+end;
 if (nappain = 't') or (nappain ='T') then begin
 totuus := true;
 tilanne;

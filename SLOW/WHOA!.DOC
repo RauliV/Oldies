@@ -1,0 +1,26 @@
+
+------------------------------------------------------------------------------
+WHOA!.COM
+"WHOA!" slowdown program
+
+This is the runnable program file for "WHOA!," a memory-resident utility that
+slows down the computer's execution speed. If you have a superfast AT, AT
+compatible, or PS/2, you can slow it down to run games and other
+time-critical programs at a manageable speed. If you don't have a computer
+that's too fast, you may want to handicap the machine to gain an advantage
+when playing certain games. "WHOA!" runs on any IBM PC, XT, AT, PS/2, or
+compatible with at least 256K of memory and DOS 2.0 or higher. It is not
+compatible with the IBM PCjr or with the advanced screen modes of the enhanced
+graphics adapter (EGA). To install the program, enter WHOA! at the DOS prompt.
+To call up WHOA! after it's installed, press Alt-F10.
+------------------------------------------------------------------------------
+WHOA!.ASM
+"WHOA!" machine language source code
+
+This is the machine (assembly) language source code file for "WHOA!," a
+memory-resident utility that slows down the computer's execution speed. This
+is not a runnable file; it is for programmers who wish to study how the
+program works. (The runnable program file is on disk under the filename
+WHOA!.COM.)
+------------------------------------------------------------------------------
+

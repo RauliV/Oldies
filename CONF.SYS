@@ -1,0 +1,2 @@
+device=c:\drdos\hidos.sys /bdos=ffff
+device=sstordrv.sys

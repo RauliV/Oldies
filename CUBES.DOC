@@ -1,0 +1,24 @@
+T„m„ yksinkertainen "demo" on tehty l„hestulkoon kokonaan Pascalilla,
+mik„ selitt„„ sen "t”kkivyyden". Rutiini v„rien saamiseksi esiin on tehty
+Turbo asseblerilla. Ohjelma kasvoi ajan my”t„. Aivan ensiksi ajattelin vain
+kokeilla, olisiko mit„„n mahdollisuuksia saada jonkinlaista 3-D palikkaa
+syntym„„n kuvaruudulle. Seuraavaksi piti tehd„ pelkk„ py”riv„ kuutio, mutta
+se alkoi pian n„ytt„„ liian tyls„lt„ katsottavalta, joten p„„tin v„lill„
+vilauttaa kuution yl„- ja alapuolta. Seuraavaksi oli vuorossa suunnan vaihto,
+jonka pian muutin satunnaiseksi. Tyytym„tt”m„n„ viel„kin tulokseen, aloin
+kuutioon kulmia, ja pian saivat nekin alkunsa sattuman varaisesti. Loppu-
+silaus sai alkunsa vahingossa, kun osa palikan j„tt„m„„ kuvaa j„i pyyhim„tt„,
+ja se oli minusta ihan mielenkiintoista j„lke„. Ohjelmoin kuution laskemaan
+aina asteittain alasp„in, jotta j„lkeen j„„v„ kuva muuttuisi. Muut asiat
+luonnistuivat Pascalin yksinkertaisilla k„skyill„.
+  Ohjelman levitt„minen on sallittua, mutta muuttaminen EI !!
+
+    Kritiikki„, omia ohjelmia, kokeneempien neuvoja,
+    kokemattomimpien (jos l”ytyy) kysymyksi„ voi l„hett„„:
+
+                                Rauli Virtanen
+                                Teerikuja 3
+                                29600 Noormarkku
+
+        Dataillaan !!!
+

@@ -1,0 +1,102 @@
+
+
+
+
+  Hi_Story  His_Tory Her_Tory...
+  ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+  Hard to imagine that a change from a slower machine to a faster one
+  can have its disadvantages, too. You may find out for example, that
+  certain graphic programs and games will suddenly stampede your
+  screen and give you rather a vicious headache than visual pleasure.
+  Run included oldtimer DAZZLER.COM on a fast machine to experience
+  what I mean.
+
+  Ironically enough, you may have a whole bunch of utilities to speed
+  up the screen display, while you are desperately looking for one to
+  calibrate speed down. So it goes...
+
+  Then you remember vaguely, there has been around some utility for
+  that purpose... Now you have ONLY to come up with the programs name:
+  Was it Slow..? Calm..? Quiet..? No, much more common:
+
+
+
+
+  ±±‹  ‹±±‹ ±±‹ ±±‹ ±±±±±±‹ ±±±±±±‹ ±±‹
+  ±±€±±€±±€ ±±€ ±±€ ±±€ﬂ±±€ ±±€ﬂ±±€ ±±€
+  ±±€±±€±±€ ±±±±±±€ ±±€ ±±€ ±±±±±±€ ±±€
+  ±±€±±€±±€ ±±€ﬂ±±€ ±±€ ±±€ ±±€ﬂ±±€  ﬂﬂ
+  ±±±±±±±±€ ±±€ ±±€ ±±±±±±€ ±±€ ±±€ ±±‹
+   ﬂﬂﬂﬂﬂﬂﬂﬂ  ﬂﬂ  ﬂﬂ  ﬂﬂﬂﬂﬂﬂ  ﬂﬂ  ﬂﬂ  ﬂﬂ
+
+  If you have fast graphic programs, applications or demos without
+  inbuild options or switches to regulate their speed, the TSR WHOA!
+  can slow down them in most cases (see WHOA!.DOC). I'll add here some
+  undocumented features:
+
+  When WHOA! goes resident it will take about 20 Kb of RAM. Loading
+  WHOA! successively twice the program comes up with the message
+  "Uninstalled". Unfortunately this is not true, as every memory
+  mapper will show. That's why I added MARK.COM and RELEASE.EXE to
+  this package. Use these utilities in connection with WHOA! (and
+  SLOWA) to free up memory consumed by these programs.
+
+  Included DAZ12.BAT demonstrates, how DAZZLER.COM should be run with
+  MARK and RELEASE, thus uninstalling WHOA! from memory after exit.
+
+  The calibration speed for WHOA! is normally set via hotkey ALT-F10.
+  However, settings straight from the command line are also possible
+  (specially useful for batch files). Like this:
+
+  WHOA! -435 ÕÕº  [slowest value]
+
+  Included WHOA!.ZIP is the original up/downloadable package
+  ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+
+
+
+              ±±±±±±‹ ±±‹     ±±±±±±‹ ±±‹   ±±‹ ±±±±±±‹
+  And now to  ±±€ﬂﬂﬂﬂ ±±€     ±±€ﬂ±±€ ±±€±±‹±±€ ±±€ﬂ±±€
+  ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ  ±±±±±±‹ ±±€     ±±€ ±±€ ±±€±±€±±€ ±±±±±±€
+               ﬂﬂﬂ±±€ ±±€     ±±€ ±±€ ±±€±±€±±€ ±±€ﬂ±±€
+              ±±±±±±€ ±±±±±±‹ ±±±±±±€ ±±±±±±±±€ ±±€ ±±€
+               ﬂﬂﬂﬂﬂﬂ  ﬂﬂﬂﬂﬂﬂ  ﬂﬂﬂﬂﬂﬂ  ﬂﬂﬂﬂﬂﬂﬂﬂ  ﬂﬂ  ﬂﬂ
+
+  Brad Crandall wrote WHOA! for 12-MHz machines, and although the
+  program works on faster machines as well, it doesn't slow down them
+  enough. So I reassembled WHOA!.ASM on and for my 16-MHz machine in
+  order to find out an appropriate optimum value for 16-MHz. After
+  many trials (and rebootings) I winded up with a maximum value of
+  -520 (slowest rate). This value decreases the speed of my system
+  drastically; to disable SLOWA via hotkey ALT-F10 can take up to a
+  minute ≠. For most graphic applications a value between -480 and
+  -510 will do fine.
+
+  I have tested SLOWA with several graphic applications and demos -
+  with good results. If you have a 16-MHz machine use SLOWA instead of
+  WHOA!. I don't know, whether and how SLOWA works on faster machines.
+  If you operate a faster one use SLOWA on your own risks.
+
+  Except for slower values SLOWA behaves the same way as WHOA!
+  described above and in WHOA!.DOC. Use DAZ16.BAT as a demo and
+  calibrate DAZZLER down to a level at your likings. DAZ16.DAT (or
+  DAZ12.BAT) can easily be modified for other applications, just
+  change the batch line
+
+  DAZZLER
+  ~~~~~~~
+  to the name of your program. When running at an extreme slow level
+  some applications tend occasionally to blank the screen. Pressing
+  the space bar will keep them going in most cases.
+
+
+               ±±±±±±‹ ±±‹     ±±±±±±‹ ±±‹ ±±‹ ±±±±±±‹  ±±‹
+               ±±€ﬂ±±€ ±±€     ±±€ﬂ±±€ ±±€ ±±€ ±±€ﬂ±±€  ±±€
+               ±±±±±±€ ±±€     ±±€ ±±€ ±±±±±±€ ±±±±±±€  ±±€
+               ±±€ﬂ±±€ ±±€     ±±€ ±±€ ±±€ﬂ±±€ ±±€ﬂ±±€   ﬂﬂ
+               ±±€ ±±€ ±±±±±±‹ ±±±±±±€ ±±€ ±±€ ±±€ ±±€  ±±‹
+                ﬂﬂ  ﬂﬂ  ﬂﬂﬂﬂﬂﬂ  ﬂﬂﬂﬂﬂﬂ  ﬂﬂ  ﬂﬂ  ﬂﬂ  ﬂﬂ   ﬂﬂ
+
+  Josef Braun
